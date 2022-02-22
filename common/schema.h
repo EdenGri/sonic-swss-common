@@ -369,7 +369,7 @@ namespace swss {
 #define CFG_CHASSIS_MODULE_TABLE                    "CHASSIS_MODULE"
 
 #define CFG_DHCP_TABLE                              "DHCP_RELAY"
-
+#define CFG_PORT_TX_ERROR_TABLE_NAME                "CFG_PORT_TX_ERROR_TABLE"
 /***** STATE DATABASE *****/
 
 #define STATE_SWITCH_CAPABILITY_TABLE_NAME          "SWITCH_CAPABILITY_TABLE"
@@ -429,7 +429,7 @@ namespace swss {
 #define STATE_ROUTE_TABLE_NAME                      "ROUTE_TABLE"
 #define STATE_VNET_RT_TUNNEL_TABLE_NAME             "VNET_ROUTE_TUNNEL_TABLE"
 #define STATE_ADVERTISE_NETWORK_TABLE_NAME          "ADVERTISE_NETWORK_TABLE"
-
+#define STATE_PORT_TX_ERROR_TABLE_NAME              "STATE_PORT_TX_ERROR_TABLE"
 /***** MISC *****/
 
 #define IPV4_NAME "IPv4"
