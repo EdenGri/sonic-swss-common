@@ -192,11 +192,13 @@ namespace swss {
 
 #define RATES_TABLE                         "RATES"
 
-/***** LOGLEVEL DATABASE *****/
-//TODO: what to do with this fileds?
-#define DAEMON_TABLE_NAME "DAEMON_TABLE"
-#define DAEMON_LOGLEVEL "LOGLEVEL"
-#define DAEMON_LOGOUTPUT "LOGOUTPUT"
+/***** EVENTS COUNTER KEYS *****/
+#define COUNTERS_EVENTS_PUBLISHED           "published"
+#define COUNTERS_EVENTS_MISSED_SLOW_RCVR    "missed_by_slow_receiver"
+#define COUNTERS_EVENTS_MISSED_INTERNAL     "missed_internal"
+#define COUNTERS_EVENTS_MISSED_CACHE        "missed_to_cache"
+#define COUNTERS_EVENTS_LATENCY             "latency_in_ms"
+
 
 /***** FLEX COUNTER DATABASE *****/
 
