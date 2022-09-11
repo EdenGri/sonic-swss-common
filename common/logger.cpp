@@ -122,7 +122,6 @@ void Logger::linkToDbWithOutput(
     logger.m_settingChangeObservers.insert(std::make_pair(dbName, std::make_pair(prioNotify, outputNotify)));
 
     DBConnector db("CONFIG_DB", 0);
-    //TODO: change to be in h file
     std::string key_prefix(CFG_LOGGER_TABLE_NAME);
     key_prefix+="|";
     std::string key = key_prefix + dbName;
@@ -155,13 +154,12 @@ void Logger::linkToDbWithOutput(
 
     if (doUpdate)
     {
-        //todo: change to table name
         swss::Table table(&db, CFG_LOGGER_TABLE_NAME);
         FieldValueTuple fvLevel(DAEMON_LOGLEVEL, prio);
         FieldValueTuple fvOutput(DAEMON_LOGOUTPUT, output);
         std::vector<FieldValueTuple>fieldValues = { fvLevel, fvOutput };
 
-        SWSS_LOG_DEBUG("Set %s loglevel to %s", dbName, prio);
+        SWSS_LOG_DEBUG("Set %s loglevel to %s", dbName.c_str() , prio.c_str());
 
         table.set(dbName, fieldValues);
     }
@@ -235,15 +233,11 @@ void Logger::settingThread()
         KeyOpFieldsValuesTuple koValues;
         dynamic_cast<SubscriberStateTable *>(selectable)->pop(koValues);
         std::string key = kfvKey(koValues), op = kfvOp(koValues);
-        SWSS_LOG_NOTICE("EDEN the key is: %s the op is : %s", key.c_str(), op.c_str());
 
         if (op != SET_COMMAND || !m_settingChangeObservers.contains(key))
         {
-            SWSS_LOG_NOTICE("EDEN not set command");
-
             continue;
         }
-        SWSS_LOG_NOTICE("EDEN got set command to change loglevel");
 
         const auto& values = kfvFieldsValues(koValues);
 
@@ -251,11 +245,8 @@ void Logger::settingThread()
         {
             auto& field = fvField(i);
             auto& value = fvValue(i);
-            SWSS_LOG_NOTICE("EDEN field is: %s, value is: %s", field.c_str(), value.c_str());
             if ((field == DAEMON_LOGLEVEL) && (value != m_currentPrios.get(key)))
             {
-                SWSS_LOG_NOTICE("EDEN start changing loglevel in setting thread");
-
                 m_currentPrios.set(key, value);
                 m_settingChangeObservers.get(key).first(key, value);
             }
@@ -273,7 +264,6 @@ void Logger::write(Priority prio, const char *fmt, ...)
 
     if (prio > m_minPrio)
         return;
-
 
     // TODO
     // + add thread id using std::thread::id this_id = std::this_thread::get_id();
