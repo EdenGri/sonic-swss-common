@@ -141,6 +141,7 @@ void Logger::linkToDbWithOutput(
     {
         prio = *prioPtr;
     }
+
     if (outputPtr == nullptr)
     {
         output = defOutput;
@@ -158,9 +159,7 @@ void Logger::linkToDbWithOutput(
         FieldValueTuple fvLevel(DAEMON_LOGLEVEL, prio);
         FieldValueTuple fvOutput(DAEMON_LOGOUTPUT, output);
         std::vector<FieldValueTuple>fieldValues = { fvLevel, fvOutput };
-
         SWSS_LOG_DEBUG("Set %s loglevel to %s", dbName.c_str() , prio.c_str());
-
         table.set(dbName, fieldValues);
     }
 
@@ -199,15 +198,13 @@ Logger::Priority Logger::getMinPrio()
     return getInstance().m_minPrio;
 }
 
-
 void Logger::settingThread()
 {
     Select select;
     DBConnector db("CONFIG_DB", 0);
-
     std::map<std::string, std::shared_ptr<SubscriberStateTable>> selectables;
-    auto table = std::make_shared<SubscriberStateTable>(&db, "LOGGER");
-    selectables.emplace("LOGGER", table);
+    auto table = std::make_shared<SubscriberStateTable>(&db, CFG_LOGGER_TABLE_NAME);
+    selectables.emplace(CFG_LOGGER_TABLE_NAME, table);
     select.addSelectable(table.get());
 
     while (m_runSettingThread)
@@ -245,6 +242,7 @@ void Logger::settingThread()
         {
             auto& field = fvField(i);
             auto& value = fvValue(i);
+
             if ((field == DAEMON_LOGLEVEL) && (value != m_currentPrios.get(key)))
             {
                 m_currentPrios.set(key, value);
@@ -261,7 +259,6 @@ void Logger::settingThread()
 
 void Logger::write(Priority prio, const char *fmt, ...)
 {
-
     if (prio > m_minPrio)
         return;
 
