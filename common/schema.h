@@ -10,7 +10,6 @@ namespace swss {
 #define APPL_DB         0
 #define ASIC_DB         1
 #define COUNTERS_DB     2
-#define LOGLEVEL_DB     3
 #define CONFIG_DB       4
 #define PFC_WD_DB       5
 #define FLEX_COUNTER_DB 5
@@ -216,11 +215,6 @@ namespace swss {
 #define COUNTERS_EVENTS_MISSED_CACHE        "missed_to_cache"
 #define COUNTERS_EVENTS_LATENCY             "latency_in_ms"
 
-/***** LOGLEVEL DATABASE *****/
-
-#define DAEMON_TABLE_NAME "DAEMON_TABLE"
-#define DAEMON_LOGLEVEL "LOGLEVEL"
-#define DAEMON_LOGOUTPUT "LOGOUTPUT"
 
 /***** FLEX COUNTER DATABASE *****/
 
@@ -420,6 +414,7 @@ namespace swss {
 #define CFG_DHCP_TABLE                              "DHCP_RELAY"
 
 #define CFG_FLOW_COUNTER_ROUTE_PATTERN_TABLE_NAME   "FLOW_COUNTER_ROUTE_PATTERN"
+#define CFG_LOGGER_TABLE_NAME                       "LOGGER"
 
 /***** STATE DATABASE *****/
 
