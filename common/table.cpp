@@ -24,7 +24,6 @@ const TableNameSeparatorMap TableBase::tableNameSeparatorMap = {
    { APPL_DB,             TABLE_NAME_SEPARATOR_COLON },
    { ASIC_DB,             TABLE_NAME_SEPARATOR_COLON },
    { COUNTERS_DB,         TABLE_NAME_SEPARATOR_COLON },
-   { LOGLEVEL_DB,         TABLE_NAME_SEPARATOR_COLON },
    { CONFIG_DB,           TABLE_NAME_SEPARATOR_VBAR  },
    { PFC_WD_DB,           TABLE_NAME_SEPARATOR_COLON },
    { FLEX_COUNTER_DB,     TABLE_NAME_SEPARATOR_COLON },
@@ -139,10 +138,10 @@ void Table::set(const string &key, const vector<FieldValueTuple> &values,
         return;
 
     RedisCommand cmd;
-    
+
     cmd.formatHSET(getKeyName(key), values.begin(), values.end());
     m_pipe->push(cmd, REDIS_REPLY_INTEGER);
-    
+
     if (ttl != DEFAULT_DB_TTL)
     {
         // Configure the expire time for the entry that was just added
